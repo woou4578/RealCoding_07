@@ -5,6 +5,8 @@ import org.cnu.realcoding.exception.DogNotFoundException;
 import org.cnu.realcoding.repository.DogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.cnu.realcoding.exception.DogsNotFoundException;
+
 
 @Service
 public class DogManagementService {
@@ -12,6 +14,12 @@ public class DogManagementService {
     @Autowired
     private DogRepository dogRepository;
 
+    public void insertDog(Dog dog) {
+        if(dogRepository.checkDog(dog.getName(),dog.getOwnerName(),dog.getOwnerPhoneNumber())) {
+            dogRepository.insertDog(dog);
+        }
+    }
+  
     public Dog getDogByName(String name) {
         Dog dog =  dogRepository.findDogByName(name);
         if (dog == null){
