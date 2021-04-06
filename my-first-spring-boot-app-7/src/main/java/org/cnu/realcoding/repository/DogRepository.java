@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class DogRepository {
@@ -19,6 +22,12 @@ public class DogRepository {
         if(dog == null ||!(dog.getOwnerPhoneNumber().equals(number) && dog.getOwnerName().equals(o_name))) {
             return true;
         }
+        throw new DogsNotFoundException();
+    }
+
+    public boolean checkDog(String name) {
+        if(mongoTemplate.exists(Query.query(Criteria.where("name").is(name)), Dog.class))
+            return true;
         throw new DogsNotFoundException();
     }
 
@@ -53,5 +62,37 @@ public class DogRepository {
         }else{
             return null;
         }
+    }
+
+    public void updateDog(String name, String ownerName, String ownerPhoneNumber, String kind) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("name").is(name));
+
+        update.set("kind", kind);
+        update.set("ownerName", ownerName);
+        update.set("ownerPhoneNumber", ownerPhoneNumber);
+        mongoTemplate.updateMulti(query, update, Dog.class);
+    }
+
+    public void updateKind(String name, String kind) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("name").is(name));
+
+        update.set("kind", kind);
+        mongoTemplate.updateMulti(query, update, Dog.class);
+    }
+
+    public void addDogMedicalRecords(String name, String medicalRecords) {
+        Query query = new Query();
+        Update update = new Update();
+
+        query.addCriteria(Criteria.where("name").is(name));
+
+        update.push("medicalRecords", medicalRecords);
+        mongoTemplate.updateFirst(query, update, Dog.class);
     }
 }
