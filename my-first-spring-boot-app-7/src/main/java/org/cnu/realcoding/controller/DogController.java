@@ -36,4 +36,19 @@ public class DogController {
         dogManagementService.insertDog(dog);
     }
 
+    @PatchMapping("/dogs/update/{name}/{ownerName}/{ownerPhoneNumber}/{kind}")
+    public void updateDogs(@PathVariable String name, @PathVariable String ownerName,
+                           @PathVariable String ownerPhoneNumber, @PathVariable String kind) {
+        dogManagementService.updateDog(name, ownerName, ownerPhoneNumber, kind);
+    }
+
+    @PatchMapping("/dogs/update/kind/{name}/{kind}")
+    public void updateKind(@PathVariable String name, @PathVariable String kind) {
+        dogManagementService.updateKind(name, kind);
+    }
+
+    @PatchMapping("/dogs/update/medicalRecords/{name}/{medicalRecords}")
+    public void addDogMedicalRecords(@PathVariable String name, @PathVariable String medicalRecords) {
+        dogManagementService.addDogMedicalRecords(name, medicalRecords);
+    }
 }

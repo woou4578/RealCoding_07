@@ -49,5 +49,23 @@ public class DogManagementService {
         }
         return dog;
     }
+
+    public void updateDog(String name, String ownerName, String ownerPhoneNumber, String kind) {
+        if(dogRepository.checkDog(name)) {
+            dogRepository.updateDog(name, ownerName, ownerPhoneNumber, kind);
+        }
+    }
+
+    public void updateKind(String name, String kind) {
+        if(dogRepository.checkDog(name)) {
+            dogRepository.updateKind(name, kind);
+        }
+    }
+
+    public void addDogMedicalRecords(String name, String medicalRecords) {
+        if(dogRepository.checkDog(name)) {
+            dogRepository.addDogMedicalRecords(name, medicalRecords);
+        }
+    }
 }
 
