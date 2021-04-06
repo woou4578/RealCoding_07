@@ -17,20 +17,7 @@ public class Dogcontroller {
     @PostMapping("/dogs")
     @ResponseStatus(HttpStatus.CREATED)
     public void createDogs(@RequestBody Dog dog) {
-        if(dogManagementService.CheckDogData(dog)) {
-            dogManagementService.insertDog(dog);
-        }
-    }
-
-    @GetMapping("/dogs")
-    public List<Dog> getAllDogs() {
-        return dogManagementService.getDogs();
-    }
-
-    //8080/dogs/ian
-    @GetMapping("/dogs/{name}")
-    public Dog getDogByName(@PathVariable String name) {
-        return dogManagementService.getDogByName(name);
+        dogManagementService.insertDog(dog);
     }
 
 
