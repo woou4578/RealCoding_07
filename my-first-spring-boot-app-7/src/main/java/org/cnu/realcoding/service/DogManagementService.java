@@ -17,7 +17,7 @@ public class DogManagementService {
 
 
     public void insertDog(Dog dog) {
-        if(!dogRepository.checkDog(dog.getName(),dog.getOwnerName(),dog.getOwnerPhoneNumber())) {
+        if(dogRepository.checkDog(dog.getName(),dog.getOwnerName(),dog.getOwnerPhoneNumber())) {
             dogRepository.insertDog(dog);
         }
     }
